@@ -27,8 +27,6 @@ class UserControllerTest extends TestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create();
-
-        $this->be($this->user);
     }
 
     /**
@@ -38,7 +36,9 @@ class UserControllerTest extends TestCase
     {
         self::assertEquals(1, User::count());
 
-        $response = $this->get('/api/users');
+        $response = $this->get('/api/users', [
+            'Authorization' => "Bearer {$this->user->api_token}",
+        ]);
 
         self::assertInternalType('array', $response->json());
         self::assertCount(1, $response->json()['data']);
@@ -51,7 +51,9 @@ class UserControllerTest extends TestCase
     {
         self::assertEquals(1, User::count());
 
-        $response = $this->get("/api/users/{$this->user->id}");
+        $response = $this->get("/api/users/{$this->user->id}", [
+            'Authorization' => "Bearer {$this->user->api_token}",
+        ]);
 
         self::assertInternalType('array', $response->json());
         self::assertEquals([
@@ -75,7 +77,9 @@ class UserControllerTest extends TestCase
 
         self::assertEquals(1, User::count());
 
-        $response = $this->get('/api/users/999');
+        $response = $this->get('/api/users/999', [
+            'Authorization' => "Bearer {$this->user->api_token}",
+        ]);
 
         self::assertInternalType('array', $response->json());
         self::assertEquals([
@@ -97,7 +101,9 @@ class UserControllerTest extends TestCase
     {
         self::assertEquals(1, User::count());
 
-        $response = $this->post('/api/users', factory(User::class)->raw());
+        $response = $this->post('/api/users', factory(User::class)->raw(), [
+            'Authorization' => "Bearer {$this->user->api_token}",
+        ]);
 
         var_dump($response->content());
 
@@ -113,6 +119,8 @@ class UserControllerTest extends TestCase
 
         $response = $this->put("/api/users/{$this->user->id}", [
             'last_name' => 'new_last_name',
+        ], [
+            'Authorization' => "Bearer {$this->user->api_token}",
         ]);
 
         /** @var User $updatedUser */

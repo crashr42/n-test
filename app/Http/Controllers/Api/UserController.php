@@ -28,12 +28,12 @@ class UserController extends ApiController
     /**
      * Find and show user.
      *
-     * @param User $user
+     * @param $id
      * @return User
      */
-    public function show(User $user)
+    public function show($id)
     {
-        return $user;
+        return User::findOrFail($id);
     }
 
     /**
@@ -54,13 +54,13 @@ class UserController extends ApiController
     /**
      * Update user.
      *
-     * @param User $user
+     * @param $id
      * @param Request $request
      * @return User
-     * @throws \App\Models\Exceptions\ModelValidationException
      */
-    public function update(User $user, Request $request)
+    public function update($id, Request $request)
     {
+        $user = User::findOrFail($id);
         $user->fill($request->input());
         $user->saveOrFail();
 

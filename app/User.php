@@ -23,6 +23,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @property int group_id
  * @property Carbon created_at
  * @property Carbon updated_at
+ * @property string api_token
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
@@ -45,7 +46,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'state', 'group_id',
+        'first_name', 'last_name', 'email', 'password', 'state', 'group_id', 'api_token',
     ];
 
     /**
@@ -54,7 +55,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'api_token',
     ];
 
     /**
