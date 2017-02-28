@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Collection;
 /**
  * Class Group
  * @property integer id
- * @property string name
  * @property Collection|User[] users
+ * @property string name
  */
 class Group extends Model
 {
@@ -18,6 +18,10 @@ class Group extends Model
 
     protected $rules = [
         'name' => 'required|string|max:50',
+    ];
+
+    protected $fillable = [
+        'name',
     ];
 
     /**
