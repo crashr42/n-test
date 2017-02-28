@@ -2,12 +2,42 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class User extends Authenticatable
+
+/**
+ * Class User
+ * @property string email
+ * @property string last_name
+ * @property string first_name
+ * @property string state
+ * @property string password
+ * @property int id
+ * @property int group_id
+ * @property Carbon created_at
+ * @property Carbon updated_at
+ */
+class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-    use Notifiable;
+    use Authenticatable, Authorizable, CanResetPassword, Notifiable;
+
+    protected $casts = [
+        'id'       => 'integer',
+        'group_id' => 'integer',
+    ];
+
+    protected $rules = [
+        'last_name'  => 'required|string|max:50',
+        'first_name' => 'required|string|max:50',
+        'email'      => 'required|email|max:255',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +45,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password', 'state', 'group_id',
     ];
 
     /**
@@ -26,4 +56,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
 }
