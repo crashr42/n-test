@@ -14,5 +14,5 @@ use Illuminate\Http\Request;
 */
 
 Route::resource('users', 'Api\UserController', [
-    'except' => ['create', 'edit'],
+    'except' => ['create', 'edit', 'destroy'],
 ]);

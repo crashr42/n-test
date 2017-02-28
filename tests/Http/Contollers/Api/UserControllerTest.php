@@ -41,7 +41,7 @@ class UserControllerTest extends TestCase
         $response = $this->get('/api/users');
 
         self::assertInternalType('array', $response->json());
-        self::assertCount(1, $response->json());
+        self::assertCount(1, $response->json()['data']);
     }
 
     /**
@@ -102,5 +102,24 @@ class UserControllerTest extends TestCase
         var_dump($response->content());
 
         static::assertEquals(2, User::count());
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_update_exists_user()
+    {
+        self::assertEquals(1, User::count());
+
+        $response = $this->put("/api/users/{$this->user->id}", [
+            'last_name' => 'new_last_name',
+        ]);
+
+        /** @var User $updatedUser */
+        $updatedUser = User::first();
+
+        self::assertEquals($this->user->id, $updatedUser->id);
+        self::assertNotEquals($this->user->last_name, $updatedUser->last_name);
+        self::assertEquals('new_last_name', $updatedUser->last_name);
     }
 }
