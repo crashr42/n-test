@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enums\UserState;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,6 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        \Validator::extend('user_state', function ($attribute, $value, $parameters) {
+            return $value === null || UserState::has($value);
+        });
+
         \Schema::defaultStringLength(191);
     }
 

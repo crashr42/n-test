@@ -38,6 +38,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'last_name'  => 'required|string|max:50',
         'first_name' => 'required|string|max:50',
         'email'      => 'required|email|max:255',
+        'password'   => 'required|string|max:255',
+        'state'      => 'required|user_state',
     ];
 
     /**
