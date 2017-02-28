@@ -4,65 +4,65 @@
  * Created by PhpStorm.
  * User: nikita.kem
  * Date: 2/28/17
- * Time: 5:43 PM
+ * Time: 7:37 PM
  */
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Api\UserRequest;
+use App\Group;
+use App\Http\Requests\Api\GroupRequest;
 use App\Models\Exceptions\ModelValidationException;
-use App\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 
-class UserController extends ApiController
+class GroupController extends ApiController
 {
     /**
-     * List user with pagination.
+     * List groups with pagination.
      *
      * @return LengthAwarePaginator
      */
     public function index()
     {
-        return User::paginate();
+        return Group::paginate();
     }
 
     /**
-     * Find and show user.
+     * Find and show group.
      *
      * @param $id
-     * @return User
+     * @return Group
      */
     public function show($id)
     {
-        return User::findOrFail($id);
+        return Group::findOrFail($id);
     }
 
     /**
-     * Create new user.
+     * Create new group.
      *
-     * @param UserRequest $request
-     * @return User
+     * @param GroupRequest $request
+     * @return Group
      * @throws ModelValidationException
      */
-    public function store(UserRequest $request)
+    public function store(GroupRequest $request)
     {
-        $user = new User($request->input());
+        $user = new Group($request->input());
         $user->saveOrFail();
 
         return $user;
     }
 
     /**
-     * Update user.
+     * Update group.
      *
      * @param $id
      * @param Request $request
-     * @return User
+     * @return Group
      */
     public function update($id, Request $request)
     {
-        $user = User::findOrFail($id);
+        $user = Group::findOrFail($id);
         $user->fill($request->input());
         $user->saveOrFail();
 

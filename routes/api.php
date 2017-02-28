@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,5 +12,8 @@ use Illuminate\Http\Request;
 */
 
 Route::resource('users', 'Api\UserController', [
+    'except' => ['create', 'edit', 'destroy'],
+]);
+Route::resource('groups', 'Api\GroupController', [
     'except' => ['create', 'edit', 'destroy'],
 ]);

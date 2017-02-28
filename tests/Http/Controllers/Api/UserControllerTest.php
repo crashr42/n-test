@@ -7,28 +7,12 @@
  * Time: 5:33 PM
  */
 
-namespace Tests\Http\Contollers\Api;
+namespace Tests\Http\Controllers\Api;
 
 use App\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\TestCase;
 
-class UserControllerTest extends TestCase
+class UserControllerTest extends ApiControllerTest
 {
-    use DatabaseMigrations;
-
-    /**
-     * @var User
-     */
-    private $user;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->user = factory(User::class)->create();
-    }
-
     /**
      * @test
      */
