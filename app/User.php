@@ -40,6 +40,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'email'      => 'required|email|max:255',
         'password'   => 'required|string|max:255',
         'state'      => 'required|user_state',
+        'group_id'   => 'integer|exists:groups,id',
     ];
 
     /**

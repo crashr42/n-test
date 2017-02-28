@@ -10,6 +10,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -55,6 +56,9 @@ class Handler extends ExceptionHandler
             }
             if ($exception instanceof ModelNotFoundException) {
                 return new JsonResponse(['error' => 'model.not_found'], 404);
+            }
+            if ($exception instanceof ValidationException) {
+                return new JsonResponse(['error' => $exception->getMessage()], 404);
             }
 
             return new JsonResponse(['error' => 'internal_error'], 500);

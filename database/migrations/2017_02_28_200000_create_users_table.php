@@ -20,10 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('last_name')->nullable(false);
             $table->string('first_name')->nullable(false);
             $table->string('state')->nullable(false);
-            $table->integer('group_id')->nullable(true);
+            $table->integer('group_id')->nullable(true)->unsigned();
             $table->string('api_token')->nullable(false);
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('group_id')->references('id')->on('groups');
         });
     }
 
