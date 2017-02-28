@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use App\Models\Exceptions\ModelValidationException;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -48,8 +49,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof ModelValidationException && $this->isApiRequest($request)) {
-            return new JsonResponse($exception->errors(), 422);
+        if ($this->isApiRequest($request)) {
+            if ($exception instanceof ModelValidationException) {
+                return new JsonResponse(['error' => $exception->errors()->first()], 422);
+            }
+            if ($exception instanceof ModelNotFoundException) {
+                return new JsonResponse(['error' => 'model.not_found'], 404);
+            }
         }
 
         return parent::render($request, $exception);

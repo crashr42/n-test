@@ -26,6 +26,7 @@ class GroupControllerTest extends ApiControllerTest
             'Authorization' => "Bearer {$this->user->api_token}",
         ]);
 
+        $response->assertStatus(200);
         self::assertInternalType('array', $response->json());
         self::assertCount(15, $response->json()['data']);
     }
@@ -33,7 +34,7 @@ class GroupControllerTest extends ApiControllerTest
     /**
      * @test
      */
-    public function it_should_find_group()
+    public function it_should_get_exists_group()
     {
         /** @var Group $group */
         $group = factory(Group::class)->create();
@@ -44,10 +45,26 @@ class GroupControllerTest extends ApiControllerTest
             'Authorization' => "Bearer {$this->user->api_token}",
         ]);
 
+        $response->assertStatus(200);
         self::assertInternalType('array', $response->json());
         self::assertArraySubset([
             'name' => $group->name,
         ], $response->json());
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_get_not_exists_group()
+    {
+        self::assertEquals(0, Group::count());
+
+        $response = $this->get('/api/groups/999', [
+            'Authorization' => "Bearer {$this->user->api_token}",
+        ]);
+
+        $response->assertStatus(404);
+        self::assertEquals('model.not_found', $response->json()['error']);
     }
 
     /**
@@ -61,7 +78,7 @@ class GroupControllerTest extends ApiControllerTest
             'Authorization' => "Bearer {$this->user->api_token}",
         ]);
 
-        self::assertInternalType('array', $response->json());
+        $response->assertStatus(200);
         self::assertEquals($group['name'], $response->json()['name']);
     }
 
@@ -77,7 +94,7 @@ class GroupControllerTest extends ApiControllerTest
             'Authorization' => "Bearer {$this->user->api_token}",
         ]);
 
-        self::assertInternalType('array', $response->json());
+        $response->assertStatus(200);
         self::assertEquals('new_test_group', $response->json()['name']);
     }
 }
