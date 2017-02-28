@@ -14,7 +14,6 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
-    static $token;
 
     return [
         'last_name'      => $faker->name,
@@ -24,7 +23,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'email'          => $faker->unique()->safeEmail,
         'password'       => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
-        'api_token'      => $token ?: $token = bcrypt('secret'),
     ];
 });
 

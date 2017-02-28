@@ -46,7 +46,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'state', 'group_id', 'api_token',
+        'first_name', 'last_name', 'email', 'password', 'state', 'group_id',
     ];
 
     /**
@@ -64,5 +64,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (User $user) {
+            $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
+        });
     }
 }

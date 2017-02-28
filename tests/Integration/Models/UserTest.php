@@ -28,6 +28,7 @@ class UserTest extends TestCase
         $user = factory(User::class)->create();
 
         self::assertEquals(1, $user->id);
+        self::assertNotNull($user->api_token);
         self::assertEquals(1, User::count());
     }
 
