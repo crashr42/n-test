@@ -10,8 +10,9 @@
 namespace Tests\Http\Controllers\Api;
 
 use App\User;
+use Tests\ApiControllerTestCase;
 
-class UserControllerTest extends ApiControllerTest
+class UserControllerTestCase extends ApiControllerTestCase
 {
     /**
      * @test

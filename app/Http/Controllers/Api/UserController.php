@@ -60,7 +60,7 @@ class UserController extends ApiController
      * @param UserRequest $request
      * @return User
      */
-    public function update($id, UserRequest $request)
+    public function update($id, Request $request)
     {
         $user = User::findOrFail($id);
         $user->fill($request->input());

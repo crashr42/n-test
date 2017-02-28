@@ -10,8 +10,9 @@
 namespace Tests\Http\Controllers\Api;
 
 use App\Group;
+use Tests\ApiControllerTestCase;
 
-class GroupControllerTest extends ApiControllerTest
+class GroupControllerTestCase extends ApiControllerTestCase
 {
     /**
      * @test

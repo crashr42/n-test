@@ -7,12 +7,12 @@
  * Time: 7:42 PM
  */
 
-namespace Tests\Http\Controllers\Api;
+namespace Tests;
 
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class ApiControllerTest extends \Tests\TestCase
+class ApiControllerTestCase extends \Tests\TestCase
 {
     use DatabaseMigrations;
 
