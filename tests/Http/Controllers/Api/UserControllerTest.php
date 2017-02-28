@@ -58,25 +58,13 @@ class UserControllerTestCase extends ApiControllerTestCase
      */
     public function it_should_not_retrieve_user_if_it_not_exists()
     {
-        static::markTestSkipped();
-
         self::assertEquals(1, User::count());
 
         $response = $this->get('/api/users/999', [
             'Authorization' => "Bearer {$this->user->api_token}",
         ]);
 
-        self::assertInternalType('array', $response->json());
-        self::assertEquals([
-            'id'         => $this->user->id,
-            'email'      => $this->user->email,
-            'last_name'  => $this->user->last_name,
-            'first_name' => $this->user->first_name,
-            'state'      => $this->user->state,
-            'group_id'   => $this->user->group_id,
-            'created_at' => $this->user->created_at,
-            'updated_at' => $this->user->updated_at,
-        ], $response->json());
+        $response->assertStatus(404);
     }
 
     /**
@@ -90,7 +78,7 @@ class UserControllerTestCase extends ApiControllerTestCase
             'Authorization' => "Bearer {$this->user->api_token}",
         ]);
 
-        var_dump($response->content());
+        $response->assertStatus(200);
 
         static::assertEquals(2, User::count());
     }
@@ -110,6 +98,8 @@ class UserControllerTestCase extends ApiControllerTestCase
 
         /** @var User $updatedUser */
         $updatedUser = User::first();
+
+        $response->assertStatus(200);
 
         self::assertEquals($this->user->id, $updatedUser->id);
         self::assertNotEquals($this->user->last_name, $updatedUser->last_name);
