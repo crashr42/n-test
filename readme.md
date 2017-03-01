@@ -1,5 +1,9 @@
 # User and groups management api
 
+# Docker
+
+Run application with docker containers `bin/docker`.
+
 # Installation
 
 - install composer and run `composer install`
