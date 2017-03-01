@@ -2,7 +2,17 @@
 
 # Docker
 
-Run application with docker containers `bin/docker`. See `Examples` section.
+Run application with docker containers `bin/docker`. 
+
+Wait container build and server start:
+
+```
+Authorization: Bearer 7605e3a23377ad2d851b3804cc7ee4bd
+PHP 5.6.30 Development Server started at Wed Mar  1 13:43:29 2017
+Listening on http://0.0.0.0:8000
+```
+
+Copy `Authorization: Bearer ...` and see `Examples` section.
 
 # Installation
 
