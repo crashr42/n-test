@@ -2,7 +2,7 @@
 
 # Docker
 
-Run application with docker containers `bin/docker`.
+Run application with docker containers `bin/docker`. See `Examples` section.
 
 # Installation
 
