@@ -18,10 +18,50 @@ Run `php artisan serve`.
 
 # Examples
 
-## Create new group
+## Groups API
+
+### List groups
+
+```bash
+curl -s -H "Authorization: Bearer ..." -X GET http://localhost:8000/api/groups
+```
+
+### Create new group
 
 ```bash
 curl -s -H "Authorization: Bearer ..." -X POST -d "name=test" http://localhost:8000/api/groups
+```
+
+### Update group
+
+```bash
+curl -s -H "Authorization: Bearer ..." -X PUT -d "name=auto" http://localhost:8000/api/groups/1
+```
+
+### List users in group
+
+```bash
+curl -s -H "Authorization: Bearer ..." -X GET http://localhost:8000/api/groups/1/users
+```
+
+## Users api
+
+### List users
+
+```bash
+curl -s -H "Authorization: Bearer ..." -X GET http://localhost:8000/api/users
+```
+
+### Create new user
+
+```bash
+curl -s -H "Authorization: Bearer ..." -X POST -d "state=active&first_name=test&last_name=test&email=zzz@test.ru" http://localhost:8000/api/users
+```
+
+### Update user
+
+```bash
+curl -s -H "Authorization: Bearer ..." -X PUT -d "group_id=1" http://localhost:8000/api/users/1
 ```
 
 # Tests

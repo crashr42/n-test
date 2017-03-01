@@ -17,3 +17,4 @@ Route::resource('users', 'Api\UserController', [
 Route::resource('groups', 'Api\GroupController', [
     'except' => ['create', 'edit', 'destroy'],
 ]);
+Route::get('/groups/{group}/users', 'Api\GroupController@users');

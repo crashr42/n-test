@@ -38,7 +38,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'last_name'  => 'required|string|max:50',
         'first_name' => 'required|string|max:50',
         'email'      => 'required|email|max:255',
-        'password'   => 'required|string|max:255',
         'state'      => 'required|user_state',
         'group_id'   => 'nullable|exists:groups,id',
     ];
@@ -75,6 +74,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
         static::creating(function (User $user) {
             $user->api_token = bin2hex(openssl_random_pseudo_bytes(16));
+            $user->password  = bin2hex(openssl_random_pseudo_bytes(8));
         });
     }
 }

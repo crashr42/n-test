@@ -10,6 +10,7 @@
 namespace Tests\Http\Controllers\Api;
 
 use App\Group;
+use App\User;
 use Tests\ApiControllerTestCase;
 
 class GroupControllerTestCase extends ApiControllerTestCase
@@ -97,5 +98,26 @@ class GroupControllerTestCase extends ApiControllerTestCase
 
         $response->assertStatus(200);
         self::assertEquals('new_test_group', $response->json()['name']);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_retrieve_users_in_group()
+    {
+        /** @var Group $group */
+        $group = factory(Group::class)->create();
+
+        factory(User::class)->times(50)->create([
+            'group_id' => $group->id,
+        ]);
+
+        $response = $this->get("/api/groups/{$group->id}/users", [
+            'Authorization' => "Bearer {$this->user->api_token}",
+        ]);
+
+        $response->assertStatus(200);
+
+        self::assertCount(15, $response->json()['data']);
     }
 }

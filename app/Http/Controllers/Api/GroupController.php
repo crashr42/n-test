@@ -47,10 +47,10 @@ class GroupController extends ApiController
      */
     public function store(GroupRequest $request)
     {
-        $user = new Group($request->input());
-        $user->saveOrFail();
+        $group = new Group($request->input());
+        $group->saveOrFail();
 
-        return $user;
+        return $group;
     }
 
     /**
@@ -62,10 +62,24 @@ class GroupController extends ApiController
      */
     public function update($id, Request $request)
     {
-        $user = Group::findOrFail($id);
-        $user->fill($request->input());
-        $user->saveOrFail();
+        $group = Group::findOrFail($id);
+        $group->fill($request->input());
+        $group->saveOrFail();
 
-        return $user;
+        return $group;
+    }
+
+    /**
+     * Users list in group.
+     *
+     * @param int $id
+     * @return LengthAwarePaginator
+     */
+    public function users($id)
+    {
+        /** @var Group $group */
+        $group = Group::findOrFail($id);
+
+        return $group->users()->paginate();
     }
 }
